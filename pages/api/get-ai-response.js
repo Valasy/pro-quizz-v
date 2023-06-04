@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     model: 'gpt-3.5-turbo',
     messages: [
       { role: 'system', content: 'You are a helpful assistant.' },
-      { role: 'user', content: `Describe a person who says: "${userInput}"` },
+      { role: 'user', content: `Responde cómo el resultado de un test de personalidad, estos con mis gustos: "${userInput}"` },
     ],
   });
 

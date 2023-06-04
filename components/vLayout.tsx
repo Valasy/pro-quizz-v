@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Layout = ({ children }) => {
 
     const [clickCount, setClickCount] = useState(0);
-    const [message, setMessage] = useState(":D");
+    const [message, setMessage] = useState(".");
 
     useEffect(() => {
         if (clickCount === 1) {

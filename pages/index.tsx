@@ -24,7 +24,7 @@ export default function Index({ allPosts }: Props) {
   return (
     <>
       <Head>
-        <title>{`Next.js Blog Example with ${CMS_NAME}`}</title>
+        <title>Un simple quizz</title>
       </Head>
       <Layout>
       {quizStarted ? <QuizForm setQuizStarted={setQuizStarted} /> : <Intro startQuiz={startQuiz} />}

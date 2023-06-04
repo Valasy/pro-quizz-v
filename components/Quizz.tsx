@@ -64,7 +64,7 @@ const quizData = [
 
 const QuizForm = ({ setQuizStarted }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
-  const { register, handleSubmit, setValue, reset, watch } = useForm<FormData>();
+  const { register, handleSubmit, setValue, reset, watch, formState: { errors } } = useForm<FormData>();
   const [loading, setLoading] = useState(false);
 
   const respuestaKeys: (keyof FormData)[] = ['respuesta1', 'respuesta2', 'respuesta3', 'respuesta4', 'respuesta5', 'respuesta6', 'respuesta7', 'respuesta8', 'respuesta9', 'respuesta10', 'respuesta11', 'respuesta12', 'respuesta13', 'respuesta14', 'respuesta15'];
@@ -94,7 +94,7 @@ const QuizForm = ({ setQuizStarted }) => {
         message += staticMessageParts[i] + newAnswers[respuestaKeys[i]] + ". ";
       }
 
-      const finalMessage = ". Elabora un perfil descriptivo de mi persona, utilizando mis gustos para inferir parte de mi personalidad y carácter, además de comentar detalles sobre mis gustos trata de mencionarlos a medida que desarrollas tu respuesta, trata de realizar conjetura en cuanto a mis respuestas, sé amable y gentil con tus palabras también divertido y animado, parte con un saludo e inmediatamente con la respuesta, todo en 300 palabras";
+      const finalMessage = ". Con esta elabora un perfil descriptivo de mi persona, utilizando mis gustos para inferir parte de mi personalidad y carácter, además de comentar detalles sobre mis gustos trata de mencionarlos a medida que desarrollas tu respuesta también mencionando debilidades pero agradables ante la gente, trata de realizar conjetura en cuanto a mis respuestas, sé amable y gentil con tus palabras también divertido y animado, la conversación termina aquí sin ninguna otra duda , todo en 250 palabras";
       // Agrega finalMessage al final de message
       message += finalMessage;
       const encodedMessage = encodeURIComponent(message);
@@ -153,15 +153,16 @@ const QuizForm = ({ setQuizStarted }) => {
       <h3 className="text-xl font-light mb-12">{quizData[questionIndex].descripcion}</h3>
 
       <h2 className="text-2xl font-bold mb-4">{quizData[questionIndex].pregunta}</h2>
-      <input {...register(respuestaKeys[questionIndex])} className="mb-4 py-2 px-4 border-2 border-black rounded-lg" />
+      <input {...register(respuestaKeys[questionIndex], { required: "Este campo es requerido" })} className="mb-4 py-2 px-4 border-2 border-black rounded-lg" />
+      {errors[respuestaKeys[questionIndex]] && (
+        <span className="text-xs text-red-500 mb-2">Tienes que responder D:</span>
+      )}
 
-      <div className="flex justify-center gap-4"> {/* Ajusta el estilo aquí */}
+      <div className="flex justify-center gap-4">
         {questionIndex > 0 && (
-          <button type="button" onClick={goBack} className="py-2 px-4 border-2 border-black bg-transparent
-          text-black rounded hover:bg-gray-200">Volver atrás</button>
+          <button type="button" onClick={goBack} className="py-2 px-4 border-2 border-black bg-transparent text-black rounded hover:bg-gray-200">Volver atrás</button>
         )}
-        <button type="submit" className="py-2 px-4 border-2 border-black bg-transparent
-        text-black rounded hover:bg-gray-200">Siguiente</button>
+        <button type="submit" className="py-2 px-4 border-2 border-black bg-transparent text-black rounded hover:bg-gray-200">Siguiente</button>
       </div>
 
     </form>
