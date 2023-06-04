@@ -94,7 +94,7 @@ const QuizForm = ({ setQuizStarted }) => {
         message += staticMessageParts[i] + newAnswers[respuestaKeys[i]] + ". ";
       }
 
-      const finalMessage = ". Con esta elabora un perfil descriptivo de mi persona, utilizando mis gustos para inferir parte de mi personalidad y carácter, además de comentar detalles sobre mis gustos trata de mencionarlos a medida que desarrollas tu respuesta también mencionando debilidades pero agradables ante la gente, trata de realizar conjetura en cuanto a mis respuestas, sé amable y gentil con tus palabras también divertido y animado, la conversación termina aquí sin ninguna otra duda , todo en 250 palabras";
+      const finalMessage = ". Con esta elabora un perfil descriptivo de mi persona, utilizando mis gustos para inferir parte de mi personalidad y carácter, además de comentar detalles sobre mis gustos trata de mencionarlos a medida que desarrollas tu respuesta también mencionando debilidades pero agradables ante la gente, trata de realizar conjetura en cuanto a mis respuestas sobre mi personalidad, sé amable y gentil con tus palabras también divertido y animado, la conversación termina aquí sin ninguna otra duda, no te despidas tu mensaje termina cuando terminas de describir la personalidad, todo en 300 palabras";
       // Agrega finalMessage al final de message
       message += finalMessage;
       const encodedMessage = encodeURIComponent(message);
