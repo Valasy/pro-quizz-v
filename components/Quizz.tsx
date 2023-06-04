@@ -4,6 +4,7 @@ import db from '../lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import BlinkingPoint from './Blink';
 import Loading from './Loading';
+import AiResponseComponent from './AIResponse'
 
 type FormData = {
   nombre: string;
@@ -24,6 +25,25 @@ type FormData = {
   respuesta15: string;
 };
 
+const staticMessageParts = [
+  "Mi nombre es ", // pregunta 1
+  "Mi color favorito es ", // pregunta 2
+  "Mi película favorita es ", // pregunta 3
+  "La comida que más me gusta es ", // pregunta 4
+  "Si tuviera que ir a una isla me llevaría ",
+  "Si tuviera que viajar a un país, iría a ",
+  "Mi serie favorita es ",
+  "Mi libros favoritos son ",
+  "El genero de musica que mas me gusta es ",
+  "Los sabores que deben tener un pastel son ",
+  "Mi estación favorita es ",
+  "La comida que nome gusta o me cae mas es ",
+  "Mi canción favorita para darlo todo en el karaoke es ",
+  "Marcas de belleza o ropa que me gustan son ",
+  "La frase que me describe es "
+
+];
+
 const quizData = [
   { pregunta: '¿Nombre?', emocion: ':D', descripcion: 'Hola!.' },
   { pregunta: '¿Color favorito?', emocion: ':)', descripcion: 'Un gusto' },
@@ -35,11 +55,11 @@ const quizData = [
   { pregunta: 'Que libros te gustan?', emocion: ':°', descripcion: 'O un diario...' },
   { pregunta: 'Género de musica?', emocion: '>_>', descripcion: 'También pueden ser bandas o cantantes' },
   { pregunta: 'Que sabores deben tener un pastel?', emocion: 'pwp', descripcion: 'También se dice torta' },
-  { pregunta: 'Golosinas? Galletas?', emocion: '*-*', descripcion: 'Comer con moderación' },
-  { pregunta: 'Comida que odies o te haga mal?', emocion: 'DX', descripcion: 'También pueden ser bandas o cantantes' },
+  { pregunta: 'Estación favorita?', emocion: '*-*', descripcion: 'Team invierano' },
+  { pregunta: 'Comida que odies o te haga mal?', emocion: 'DX', descripcion: 'Cuidado con las alergías!' },
   { pregunta: 'Cuál es tu canción favorita para darlo todo en el karaoke?', emocion: ':D!', descripcion: 'Motion Sickness' },
   { pregunta: 'Marcas de belleza o ropa que te gusten?', emocion: ':B', descripcion: 'Gucci' },
-  { pregunta: '¿Tangananica o Tanganana?', emocion: 'uwu', descripcion: '...' },
+  { pregunta: 'Que frase te describe', emocion: 'uwu', descripcion: '...' },
 ];
 
 const QuizForm = ({ setQuizStarted }) => {
@@ -55,6 +75,9 @@ const QuizForm = ({ setQuizStarted }) => {
   const [allAnswers, setAllAnswers] = useState({});
   const [personality, setPersonality] = useState(null);
 
+  const [aiResponse, setAiResponse] = useState(null);
+
+
 
   const onSubmit = async (data: FormData) => {
     // Combina las respuestas anteriores con la nueva respuesta
@@ -65,10 +88,25 @@ const QuizForm = ({ setQuizStarted }) => {
       setQuestionIndex(questionIndex + 1);
     } else {
       setLoading(true);
+      // Construye el mensaje a partir de las respuestas y las partes estáticas
+      let message = "";
+      for (let i = 0; i < staticMessageParts.length; i++) {
+        message += staticMessageParts[i] + newAnswers[respuestaKeys[i]] + ". ";
+      }
+
+      const finalMessage = ". Elabora un perfil descriptivo de mi persona, utilizando mis gustos para inferir parte de mi personalidad y carácter, además de comentar detalles sobre mis gustos trata de mencionarlos a medida que desarrollas tu respuesta, trata de realizar conjetura en cuanto a mis respuestas, sé amable y gentil con tus palabras también divertido, parte con un saludo e inmediatamente con la respuesta, todo en 300 palabras";
+      // Agrega finalMessage al final de message
+      message += finalMessage;
+      const res = await fetch(`/api/get-ai-response?link=${message}`)
+      const data = await res.json()
+      const text = data['choices'][0]['message']['content'];
+      setAiResponse(text);
+
+
       try {
         const docRef = await addDoc(collection(db, "quizzes"), newAnswers);
         console.log("Document written with ID: ", docRef.id);
-        setQuizStarted(false); // Reinicia el quiz
+        //setQuizStarted(false); // Reinicia el quiz
       } catch (e) {
         console.error("Error adding document: ", e);
       }
@@ -94,7 +132,10 @@ const QuizForm = ({ setQuizStarted }) => {
     return <Loading loading={loading} />;
   }
 
-  // Esta función será manejadora del evento click del botón "Volver atrás"
+  if (aiResponse) {
+    return <AiResponseComponent response={aiResponse} />
+  }
+
   const goBack = () => {
     if (questionIndex > 0) {
       const newAnswers = { ...allAnswers };
@@ -117,16 +158,14 @@ const QuizForm = ({ setQuizStarted }) => {
       <div className="flex justify-center gap-4"> {/* Ajusta el estilo aquí */}
         {questionIndex > 0 && (
           <button type="button" onClick={goBack} className="py-2 px-4 border-2 border-black bg-transparent
-        text-black rounded hover:bg-gray-200">Volver atrás</button>
+          text-black rounded hover:bg-gray-200">Volver atrás</button>
         )}
         <button type="submit" className="py-2 px-4 border-2 border-black bg-transparent
-      text-black rounded hover:bg-gray-200">Siguiente</button>
+        text-black rounded hover:bg-gray-200">Siguiente</button>
       </div>
-      {personality ? <div>
-        <h2>Tu personalidad analizada</h2>
-        <p>{personality}</p>
-      </div> : <></>}
+
     </form>
+
 
   );
 };

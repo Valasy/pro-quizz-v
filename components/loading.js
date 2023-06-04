@@ -12,7 +12,7 @@ function Loading({ loading }) {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <BeatLoader color="#000000" loading={loading} css={override} size={20} />
-      <p className="text-2xl font-bold mt-4">Cargando...</p>
+      <p className="text-2xl font-bold mt-4">Pensando...</p>
     </div>
   );
 }
