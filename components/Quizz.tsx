@@ -37,7 +37,7 @@ const staticMessageParts = [
   "El genero de musica que mas me gusta es ",
   "Los sabores que deben tener un pastel son ",
   "Mi estación favorita es ",
-  "La comida que nome gusta o me cae mas es ",
+  "La comida que no me gusta o me cae mas es ",
   "Mi canción favorita para darlo todo en el karaoke es ",
   "Marcas de belleza o ropa que me gustan son ",
   "La frase que me describe es "
@@ -94,14 +94,15 @@ const QuizForm = ({ setQuizStarted }) => {
         message += staticMessageParts[i] + newAnswers[respuestaKeys[i]] + ". ";
       }
 
-      const finalMessage = ". Elabora un perfil descriptivo de mi persona, utilizando mis gustos para inferir parte de mi personalidad y carácter, además de comentar detalles sobre mis gustos trata de mencionarlos a medida que desarrollas tu respuesta, trata de realizar conjetura en cuanto a mis respuestas, sé amable y gentil con tus palabras también divertido, parte con un saludo e inmediatamente con la respuesta, todo en 300 palabras";
+      const finalMessage = ". Elabora un perfil descriptivo de mi persona, utilizando mis gustos para inferir parte de mi personalidad y carácter, además de comentar detalles sobre mis gustos trata de mencionarlos a medida que desarrollas tu respuesta, trata de realizar conjetura en cuanto a mis respuestas, sé amable y gentil con tus palabras también divertido y animado, parte con un saludo e inmediatamente con la respuesta, todo en 300 palabras";
       // Agrega finalMessage al final de message
       message += finalMessage;
-      const res = await fetch(`/api/get-ai-response?link=${message}`)
-      const data = await res.json()
+      const encodedMessage = encodeURIComponent(message);
+      const res = await fetch(`/api/get-ai-response?link=${encodedMessage}`);
+      const data = await res.json();
       const text = data['choices'][0]['message']['content'];
       setAiResponse(text);
-
+      setLoading(false);
 
       try {
         const docRef = await addDoc(collection(db, "quizzes"), newAnswers);
@@ -111,9 +112,8 @@ const QuizForm = ({ setQuizStarted }) => {
         console.error("Error adding document: ", e);
       }
 
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
+      setLoading(false);
+
     }
   };
 
