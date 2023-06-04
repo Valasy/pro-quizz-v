@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import db from '../lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import BlinkingPoint from './Blink';
-import Loading from './Loading';
+import Loading from './loading';
 import AiResponseComponent from './AIResponse'
 
 type FormData = {
