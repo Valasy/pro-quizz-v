@@ -1,6 +1,7 @@
 // Loading.js
 import { css } from "@emotion/react";
 import BeatLoader from "react-spinners/BeatLoader";
+import Typewriter from 'typewriter-effect';
 
 const override = css`
   display: block;
@@ -10,14 +11,17 @@ const override = css`
 
 function Loading({ loading }) {
   return (
-<Typewriter
-      options={{
-        strings: ['Pensando...', 'Puede tardar', 'Un momento por favor','Calculando a la velocidad de la luz','Sabías que...','Ya casi','Está saliendo del horno','99.999%'],
-        autoStart: true,
-        loop: true,
-        delay: 80,
-      }}
-    />
+    <div className="flex flex-col items-center justify-center h-screen">
+      <BeatLoader color="#000000" loading={loading} css={override} size={20} />
+      <Typewriter
+        options={{
+          strings: ['Pensando...', 'Puede tardar', 'Un momento por favor', 'Calculando a la velocidad de la luz', 'Sabías que...', 'Ya casi', 'Está casi', '99.999%'],
+          autoStart: true,
+          loop: true,
+          delay: 80,
+        }}
+      />  
+    </div>
   );
 }
 

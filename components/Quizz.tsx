@@ -38,7 +38,7 @@ const staticMessageParts = [
   "Los sabores que deben tener un pastel son ",
   "Mi estación favorita es ",
   "La comida que no me gusta o me cae mas es ",
-  "Mi canción favorita para darlo todo en el karaoke es ",
+  "Lo que mas me gusta hacer en mi tiempo libre es ",
   "Marcas de belleza o ropa que me gustan son ",
   "La frase que me describe es "
 
@@ -57,7 +57,7 @@ const quizData = [
   { pregunta: 'Que sabores deben tener un pastel?', emocion: 'pwp', descripcion: 'También se dice torta' },
   { pregunta: 'Estación favorita?', emocion: '*-*', descripcion: 'Team invierano' },
   { pregunta: 'Comida que odies o te haga mal?', emocion: 'DX', descripcion: 'Cuidado con las alergías!' },
-  { pregunta: 'Cuál es tu canción favorita para darlo todo en el karaoke?', emocion: ':D!', descripcion: 'Motion Sickness' },
+  { pregunta: 'Qué es lo que más te gusta hacer en tu tiempo libre??', emocion: ':D!', descripcion: 'Motion Sickness' },
   { pregunta: 'Marcas de belleza o ropa que te gusten?', emocion: ':B', descripcion: 'Gucci' },
   { pregunta: 'Que frase te describe', emocion: 'uwu', descripcion: '...' },
 ];
