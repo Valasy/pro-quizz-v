@@ -1,3 +1,72 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-out {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.slide-enter {
+    animation: slide-in 0.5s forwards;
+}
+
+.slide-exit {
+    animation: slide-out 0.5s forwards;
+}
+
+.dialogue-cloud {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+}
+
+.dialogue-cloud::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -20px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent #fff transparent transparent;
+}
+
+.dialogue-cloud::after {
+    content: "";
+    position: absolute;
+    top: 30%;
+    right: -20px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-left-color: #fff;
+}
+
+
+.card {
+    background-color: #f8f7f7;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+

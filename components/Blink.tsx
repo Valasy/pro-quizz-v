@@ -20,7 +20,7 @@ const BlinkingPoint = () => {
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        _
+        
       </span>
       <span></span>
     </span>

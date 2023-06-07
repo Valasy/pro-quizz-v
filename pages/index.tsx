@@ -6,6 +6,7 @@ import { CMS_NAME } from '../lib/constants'
 import Post from '../interfaces/post'
 import { useState } from 'react'
 import QuizForm from '../components/Quizz'
+import Footer from '../components/Footer'
 
 type Props = {
   allPosts: Post[]
